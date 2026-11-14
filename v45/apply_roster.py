@@ -81,7 +81,10 @@ for a,b in [
  ("+' SOURCE-REVIEWED · '+","+' PLAYABLE · '+"),
  ("+' source-reviewed'","+' playable'"),
  ("' REVIEWED'","' PLAYABLE'"),
- ("570 first-pass reviewed","570 historical first-pass reviewed")
+ ("570 first-pass reviewed","570 historical first-pass reviewed"),
+ ("Only source-reviewed careers enter normal matches. You can change this selection any time.","Normal matches also include first-pass V45 career clues. New entries need historical verification."),
+ ("Optional testing only. Provisional club lists may be incomplete or wrong; years, loan status and league appearances are intentionally blank. Beta results do not affect your personal records. Daily Mystery uses source-reviewed players only.","V45 first-pass footballers are playable in normal matches and count towards your results. Their selected club histories may be incomplete; missing league appearances remain blank. Daily Mystery keeps its existing player pool."),
+ ('<span id="databaseCount">151 REVIEWED</span>','<span id="databaseCount">1,000 PLAYABLE</span>')
 ]:raw=raw.replace(a,b)
 if "'cc.galaxy.v15.'" not in raw:raise SystemExit("Save namespace changed")
 html_path.write_text(raw,encoding="utf-8")
