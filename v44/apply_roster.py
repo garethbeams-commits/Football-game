@@ -85,6 +85,8 @@ raw=raw.replace("version:'43.0'","version:'44.0'").replace("version:43,albumKnow
 raw=raw.replace("570 first-pass reviewed","620 first-pass reviewed")
 raw=raw.replace("CAREER CLUES · V42","CAREER CLUES · V44")
 raw=raw.replace("Guess the Footballer V43","Guess the Footballer V44")
+raw=raw.replace("Career Clues V43</title>","Career Clues V44</title>")
+raw=raw.replace("version:43,entries","version:44,entries")
 if "cc.galaxy.v15." not in raw: raise SystemExit("Save namespace missing")
 html_path.write_text(raw,encoding="utf8")
 gradle=gradle_path.read_text(encoding="utf8")
