@@ -58,7 +58,7 @@ cat['release']='49.0-2000-forgotten-first-pass-2026-11-14'
 cat['editorial_notice']='2,000 playable players. V45–V49 first-pass selected club stops may be incomplete or misdated. New domestic appearance values deliberately blank. This is not a certified career database.'
 for gender in ('men','women'):cat['category_counts'][gender]=sum(x['category']==gender for x in cat['entries'])
 assert cat['count']==2000 and cat['category_counts']=={'men':1593,'women':407}
-assert sum(len(x['clubs']) for pack in data['packs'].values() for x in pack)==9834
+assert sum(len(x['clubs']) for pack in data['packs'].values() for x in pack)==9827
 before=raw[:a];after=raw[b:]
 for x,y in [
  ('Guess the Footballer V48','Guess the Footballer V49'),
