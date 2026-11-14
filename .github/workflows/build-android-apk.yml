@@ -1,4 +1,4 @@
-name: Build Football Game V48 APK
+name: Build Football Game V49 APK
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
       - 'v46/**'
       - 'v47/**'
       - 'v48/**'
+      - 'v49/**'
       - '.github/workflows/build-android-apk.yml'
   workflow_dispatch:
 
@@ -97,6 +98,29 @@ jobs:
           print('Verified V48 Android game: 1750 players, 8767 selected club clues.')
           PY
 
+      - name: Add 250 V49 forgotten footballers (2,000 total)
+        run: python3 v49/apply_roster.py
+
+      - name: Verify V49 player build
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          s=Path('app/src/main/assets/www/index.html').read_text(encoding='utf8')
+          a=s.index('window.__CareerEmbedded=')+len('window.__CareerEmbedded=')
+          d=json.loads(s[a:s.index(';</script>',a)])
+          c=d['catalog']
+          assert c['count']==2000 and len(c['entries'])==2000
+          assert c['category_counts']=={'men':1593,'women':407}
+          assert len(d['packs']['0013'])==125 and len(d['packs']['0014'])==125
+          assert sum(len(p['clubs']) for pack in d['packs'].values() for p in pack)==9834
+          assert len({p['id'] for p in c['entries']})==2000
+          assert c['verified_count']==620
+          assert all(p['tier']==3 for pack in ('0013','0014') for p in d['packs'][pack])
+          assert all(x[3] is None for pack in ('0013','0014') for p in d['packs'][pack] for x in p['clubs'])
+          print('Verified V49: 2000 players; 9834 club stops; new appearance values empty')
+          PY
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
@@ -122,7 +146,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Football-Game-V48-1750-APK
+          name: Football-Game-V49-2000-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
