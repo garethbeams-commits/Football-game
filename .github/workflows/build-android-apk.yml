@@ -1,10 +1,11 @@
-name: Build Football Game APK
+name: Build Football Game V44 APK
 
 on:
   push:
     branches: [main]
     paths:
       - 'Football_Game_Android_Source_Upload.zip'
+      - 'v44/**'
       - '.github/workflows/build-android-apk.yml'
   workflow_dispatch:
 
@@ -21,6 +22,9 @@ jobs:
 
       - name: Unpack Android game source
         run: unzip -q Football_Game_Android_Source_Upload.zip -d .
+
+      - name: Add 50 FBref-researched V44 players
+        run: python3 v44/apply_roster.py
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -47,7 +51,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Football-Game-V43-APK
+          name: Football-Game-V44-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
