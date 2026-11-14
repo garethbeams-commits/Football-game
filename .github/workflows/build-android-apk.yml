@@ -1,4 +1,4 @@
-name: Build Football Game V45 APK
+name: Build Football Game V46 APK
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - 'Football_Game_Android_Source_Upload.zip'
       - 'v44/**'
       - 'v45/**'
+      - 'v46/**'
       - '.github/workflows/build-android-apk.yml'
   workflow_dispatch:
 
@@ -29,6 +30,27 @@ jobs:
 
       - name: Add 380 V45 players (1,000 total)
         run: python3 v45/apply_roster.py
+
+      - name: Add 250 V46 forgotten footballers (1,250 total)
+        run: python3 v46/apply_roster.py
+
+      - name: Verify V46 player build
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          txt=Path('app/src/main/assets/www/index.html').read_text()
+          a=txt.index('window.__CareerEmbedded=')+len('window.__CareerEmbedded=')
+          b=txt.index(';</script>',a)
+          data=json.loads(txt[a:b])
+          cat=data['catalog']
+          assert cat['count']==1250, cat['count']
+          assert cat['category_counts']=={'men':1003,'women':247}, cat['category_counts']
+          assert len(data['packs']['0007'])==125 and len(data['packs']['0008'])==125
+          assert len(cat['entries'])==len({p['id'] for p in cat['entries']})
+          assert sum(len(p['clubs']) for pack in data['packs'].values() for p in pack)==7028
+          print('Verified V46 Android game: 1250 players, 7028 club clues.')
+          PY
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -55,7 +77,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Football-Game-V45-1000-APK
+          name: Football-Game-V46-1250-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
