@@ -41,7 +41,7 @@ for row in rows:
     seen_names.add(slug(name))
     clubs=[]
     for spec in row["Career_club_records"].split("; "):
-        match = re.match(r"^(\\d{4}(?:[–-](?:\\d{4})?)?)\\s+(.+)$",spec)
+        match = re.match(r"^(\d{4}(?:[–-](?:\d{4})?)?)\s+(.+)$",spec)
         if not match:
             raise SystemExit("Bad career clue "+name+": "+spec)
         years,club = match.groups()
