@@ -113,12 +113,12 @@ jobs:
           assert c['count']==2000 and len(c['entries'])==2000
           assert c['category_counts']=={'men':1593,'women':407}
           assert len(d['packs']['0013'])==125 and len(d['packs']['0014'])==125
-          assert sum(len(p['clubs']) for pack in d['packs'].values() for p in pack)==9834
+          assert sum(len(p['clubs']) for pack in d['packs'].values() for p in pack)==9827
           assert len({p['id'] for p in c['entries']})==2000
           assert c['verified_count']==620
           assert all(p['tier']==3 for pack in ('0013','0014') for p in d['packs'][pack])
           assert all(x[3] is None for pack in ('0013','0014') for p in d['packs'][pack] for x in p['clubs'])
-          print('Verified V49: 2000 players; 9834 club stops; new appearance values empty')
+          print('Verified V49: 2000 players; 9827 club stops; new appearance values empty')
           PY
 
       - name: Set up Java 17
